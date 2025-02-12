@@ -1,0 +1,24 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: mlflow-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mlflow
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mlflow
+    spec:
+      containers:
+      - name: mlflow
+        image: alaasalmo/mlflow:1.0
+        volumeMounts:
+        - mountPath: /mlflow
+          name: volume
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: task-pv-claim
