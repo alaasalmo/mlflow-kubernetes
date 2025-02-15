@@ -123,10 +123,10 @@ EOF
 Build docker image
 
 ```
-docker login --username XXXXXXX --password XXXXXXX
-docker build -f Dockerfile -t mlflow:1.0.0 .
-docker tag mlflow:0.1.0 alaasalmo/mlflow:1.0.0
-docker push alaasalmo/mlflow:0.1.0
+"docker login --username XXXXXXX --password XXXXXXX"
+"docker build -f Dockerfile -t mlflow:1.0.0 ."
+"docker tag mlflow:0.1.0 alaasalmo/mlflow:1.0.0"
+"docker push alaasalmo/mlflow:0.1.0"
 ```
 
 ##### B. Using MLFlow docker with Minikube
