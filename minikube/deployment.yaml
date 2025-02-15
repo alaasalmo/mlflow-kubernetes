@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mlflow
-        image: alaasalmo/mlflow:1.0
+        image: alaasalmo/mlflow:1.0.0
         volumeMounts:
         - mountPath: /mlflow
           name: volume

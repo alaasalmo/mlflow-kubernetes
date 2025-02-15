@@ -124,8 +124,8 @@ Build docker image
 
 ```
 docker login --username XXXXXXX --password XXXXXXX
-docker build -f Dockerfile -t mlflow:0.1.0 
-docker tag mlflow:0.1.0 alaasalmo/mlflow:0.1.0
+docker build -f Dockerfile -t mlflow:1.0.0 .
+docker tag mlflow:0.1.0 alaasalmo/mlflow:1.0.0
 docker push alaasalmo/mlflow:0.1.0
 ```
 
@@ -195,9 +195,58 @@ http://172.25.183.169:31434
 ```
 Note: Use the URL above in the browser
 
+Go to the web and check the mlflow
+
+<p align="center">
+<img align="center" src="img\main-page.jpg" wodth=90%>
+</p>
+
 ##### C. Build the model with MLflow
 
+In this example, we will build and compare two machine learning models using MLflow. The implementation can be done in a Jupyter Notebook or any Python IDE, such as Visual Studio Code.
+
+We will use the Credit Card Fraud Detection dataset from Kaggle to train our models.
+
+For this dataset, we will implement and evaluate two models: Logistic Regression and XGBoost.
+
+After running the model in Python, we can view it in MLflow. However, to access the artifact files, we need to manually transfer them to the appropriate folder.
+
+In our setup, we use PVC (Persistent Volume Claim) as distributed storage. To streamline this process, one solution is to configure Amazon S3 as the artifact storage. This allows MLflow to save artifacts directly to S3 and retrieve them seamlessly when needed.
+
+In our next post, we will explore an alternative solution using a Jupyter Notebook pod to directly access the distributed storage.
 
 
+The example python for buildig machine learning code 
+
+<a href="machinelearning/logisticregressionandXGBoost.py">logisticregressionandXGBoost.py</a> file
+
+After we run the model, we go to the mlflow page and check:
+
+1- Experiments (Top menue)
+
+<p align="center">
+<img align="center" src="img\main-page2.jpg" wodth=90%>
+</p>
+
+2- Register Model (Top menu)
+
+<p align="center">
+<img align="center" src="img\main-page3.jpg" wodth=90%>
+</p>
+
+When we run the command</br> 
+mlflow.sklearn.log_model(xg, "xgboost model", registered_model_name="XGBoostModel")</br>
+mlflow.sklearn.log_model(lr, "LogisticRegression model", registered_model_name="LogisticRegressionModel")</br>
+
+According the two examples above Where is the model saved and artifacts in our model?
+
+✅ <b>MLflow Tracking Database (Model Registry)</b>
+Since you specified registered_model_name="XGBoostModel", the model is stored in the MLflow Model Registry, which is typically connected to a database backend (like PostgreSQL or MySQL, depending on your MLflow setup).
+You can access it via MLflow UI or through MLflow’s API.
+
+✅ <b>Artifact Store (if configured)</b>
+If your MLflow is connected to an artifact store (like AWS S3, Google Cloud Storage, or a local file system), the model will be stored there. 
+In our model after run the model locally we have to transfer we can use the command to poin t to the local mlflow.set_tracking_uri("file:/your/local/mlflow/artifacts").   
+The exact storage location depends on your MLflow configuration.
 
 ✅
